@@ -60,7 +60,7 @@ public class Principal extends javax.swing.JFrame {
     long semilla = 0;
     DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-    DecimalFormat df = new DecimalFormat("#.###");
+    DecimalFormat df = new DecimalFormat("#.####");
 
     private JFrame pantallaActual;
 
@@ -176,8 +176,8 @@ public class Principal extends javax.swing.JFrame {
         filaAImprimir[2] = aux.getMaterial();
         filaAImprimir[3] = aux.getProximoMaterial();
         filaAImprimir[4] = df.format(aux.getRndPedido());
-        filaAImprimir[5] = aux.getProxLlegada();
-        filaAImprimir[6] = aux.getTiempoEntreLlegadas();
+        filaAImprimir[5] = df.format(aux.getTiempoEntreLlegadas());
+        filaAImprimir[6] = df.format(aux.getProxLlegada());
         filaAImprimir[7] = aux.getA1().getE().toString();
         filaAImprimir[8] = aux.getA1().getMaterial();
         filaAImprimir[9] = df.format(aux.getA1().getRnd());
@@ -1155,12 +1155,12 @@ public class Principal extends javax.swing.JFrame {
         aux2 = new Fila(aux1.getE(),aux1.getMaterial(),aux1.getProximoMaterial(),aux1.getRndPedido(),aux1.getTiempoEntreLlegadas(), aux1.getProxLlegada(), A1, A2, A3, A4, A5,aux1.getColaA3(),aux1.getColaA5(), aux1.getTareasTerminadas(),aux1.getContadorN(), aux1.getLlegadaActividadCalc());
         for (int i = 0; i < N; i++) {
 
-            aux2.CalcularNuevaFila();
+
 
             if (aux1.getContadorN() >= desde && aux1.getContadorN() <= hasta || aux1.getContadorN() == N) {
                 llenarFila(aux1);
                 tabla.addRow(filaAImprimir);
-
+                aux1.CalcularNuevaFila();
               /*  if (aux2.getContadorN() == 2) {
                     llenarFila(aux2);
                     tabla.addRow(filaAImprimir);
@@ -1168,7 +1168,6 @@ public class Principal extends javax.swing.JFrame {
                 }*/
             }
 
-            aux1 = aux2;
         }
 
         Tabla.setModel(tabla);

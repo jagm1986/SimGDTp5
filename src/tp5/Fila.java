@@ -158,7 +158,7 @@ public class Fila {
     }
     
     private double menorTiempo(){
-        double min = Math.min(tiempoEntreLlegadas,A1.getProxFin());
+        double min = Math.min(proxLlegada,A1.getProxFin());
         min = Math.min(min,A2.getProxFin());
         min = Math.min(min,A3.getProxFin());
         min = Math.min(min,A4.getProxFin());

@@ -7,11 +7,18 @@ package tp5;
 
 //TODO Agregar validaciones para parametros normal y exponencial
 //TODO Ultimo punto con los 15 intervalos
+import java.awt.HeadlessException;
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.*;
 import org.apache.commons.math3.distribution.TDistribution;
 import org.jfree.chart.ChartFactory;
@@ -35,13 +42,14 @@ public class Principal extends javax.swing.JFrame {
     int N = 0;
     int desde = 0;
     int hasta = 0;
+    double lambdaLl = 0;
     private IActividad auxA1;
     private IActividad auxA2;
     private IActividad auxA3;
     private IActividad auxA4;
     private IActividad auxA5;
-    private IFila aux1;
-    private IFila aux2;
+    private Fila aux1;
+    private Fila aux2;
     private double promedio = 0;
     private double maximo = 0;
     private double minimo = 0;
@@ -52,45 +60,159 @@ public class Principal extends javax.swing.JFrame {
     long semilla = 0;
     DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-    DecimalFormat df = new DecimalFormat("#.###");
+    DecimalFormat df = new DecimalFormat("#.####");
 
     private JFrame pantallaActual;
 
-    private Object[] filaAImprimir = new Object[31];
-    private Object[] columna = {"Sim", "R1", "T A1", "R2", "T A2", "R3", "T A3", "R4", "T A4", "Fin A4", "R5", "T A5", "Fin", "Acum", "Prom", "Min", "Max", "<45", "Var", "DS", "Form tst", "T In mas tardio A1", "T In mas tardio A2", "T In mas tardio A3", "T In mas tardio A4", "T In mas tardio A5", "%A1", "%A2", "%A3", "%A4", "%A5"};
+    private Object[] filaAImprimir = new Object[42];
+    private Object[] columna = {"Nro Sim","Reloj", "Nro Material", "Proximo Mat", "Rnd Llegada", "T Entre Llegadas", "Prox Llegada", "Estado A1", "Material A1", "rnd A1", "T Atencion A1", "Prox fin A1", "Cola A1", "Estado A2", "Material A2", "rnd A2", "T Atencion A2", "Prox fin A2", "Cola A2", "Estado A3", "Material A3", "rnd A3", "T Atencion A3", "Prox fin A3", "Cola A3" , "Estado A4", "Material A4", "rnd A4", "T Atencion A4", "Prox fin A4", "Cola A4", "Estado A5", "Material A5", "rnd A5", "T Atencion A5", "Prox fin A5", "Cola A2 (5)", "Cola A4 (5)", "Cola Terminados A3", "Cola Terminados A5", "Tareas terminadas"};
 
-    private void llenarFila(IFila aux) {
+    
+
+    public Principal(IActividad auxA1, IActividad auxA2, IActividad auxA3, IActividad auxA4, IActividad auxA5, Fila aux1, Fila aux2, JFrame pantallaActual, double masBajo, JButton BtnSimular, JTable Tabla, JButton btnEvaluar, ButtonGroup buttonGroup1, ButtonGroup buttonGroup2, ButtonGroup buttonGroup3, ButtonGroup buttonGroup4, ButtonGroup buttonGroup5, ButtonGroup buttonGroup6, JLabel jLabel1, JLabel jLabel10, JLabel jLabel11, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel20, JLabel jLabel21, JLabel jLabel22, JLabel jLabel23, JLabel jLabel24, JLabel jLabel25, JLabel jLabel26, JLabel jLabel27, JLabel jLabel28, JLabel jLabel29, JLabel jLabel3, JLabel jLabel30, JLabel jLabel31, JLabel jLabel32, JLabel jLabel33, JLabel jLabel34, JLabel jLabel35, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JScrollPane jScrollPane1, JTextField lambdaLlegadas, JLabel lblIntegrantes, JRadioButton radioButtonExpA1, JRadioButton radioButtonExpA2, JRadioButton radioButtonExpA3, JRadioButton radioButtonExpA4, JRadioButton radioButtonExpA5, JRadioButton radioButtonNormalA1, JRadioButton radioButtonNormalA2, JRadioButton radioButtonNormalA3, JRadioButton radioButtonNormalA4, JRadioButton radioButtonNormalA5, JRadioButton radioButtonUniformeA1, JRadioButton radioButtonUniformeA2, JRadioButton radioButtonUniformeA3, JRadioButton radioButtonUniformeA4, JRadioButton radioButtonUniformeA5, JTextField textLambdaA1, JTextField textLambdaA2, JTextField textLambdaA3, JTextField textLambdaA4, JTextField textLambdaA5, JTextField textMuA1, JTextField textMuA2, JTextField textMuA3, JTextField textMuA4, JTextField textMuA5, JTextField textSigmaA1, JTextField textSigmaA2, JTextField textSigmaA3, JTextField textSigmaA4, JTextField textSigmaA5, JTextField textaA1, JTextField textaA2, JTextField textaA3, JTextField textaA4, JTextField textaA5, JTextField textbA1, JTextField textbA2, JTextField textbA3, JTextField textbA4, JTextField textbA5, JTextField txtCantidadFilas, JTextField txtDesde, JTextField txtHasta) throws HeadlessException {
+        this.auxA1 = auxA1;
+        this.auxA2 = auxA2;
+        this.auxA3 = auxA3;
+        this.auxA4 = auxA4;
+        this.auxA5 = auxA5;
+        this.aux1 = aux1;
+        this.aux2 = aux2;
+        this.pantallaActual = pantallaActual;
+        this.masBajo = masBajo;
+        this.BtnSimular = BtnSimular;
+        this.Tabla = Tabla;
+        this.btnEvaluar = btnEvaluar;
+        this.buttonGroup1 = buttonGroup1;
+        this.buttonGroup2 = buttonGroup2;
+        this.buttonGroup3 = buttonGroup3;
+        this.buttonGroup4 = buttonGroup4;
+        this.buttonGroup5 = buttonGroup5;
+        this.buttonGroup6 = buttonGroup6;
+        this.jLabel1 = jLabel1;
+        this.jLabel10 = jLabel10;
+        this.jLabel11 = jLabel11;
+        this.jLabel12 = jLabel12;
+        this.jLabel13 = jLabel13;
+        this.jLabel14 = jLabel14;
+        this.jLabel15 = jLabel15;
+        this.jLabel16 = jLabel16;
+        this.jLabel17 = jLabel17;
+        this.jLabel18 = jLabel18;
+        this.jLabel19 = jLabel19;
+        this.jLabel2 = jLabel2;
+        this.jLabel20 = jLabel20;
+        this.jLabel21 = jLabel21;
+        this.jLabel22 = jLabel22;
+        this.jLabel23 = jLabel23;
+        this.jLabel24 = jLabel24;
+        this.jLabel25 = jLabel25;
+        this.jLabel26 = jLabel26;
+        this.jLabel27 = jLabel27;
+        this.jLabel28 = jLabel28;
+        this.jLabel29 = jLabel29;
+        this.jLabel3 = jLabel3;
+        this.jLabel30 = jLabel30;
+        this.jLabel31 = jLabel31;
+        this.jLabel32 = jLabel32;
+        this.jLabel33 = jLabel33;
+        this.jLabel34 = jLabel34;
+        this.jLabel35 = jLabel35;
+        this.jLabel4 = jLabel4;
+        this.jLabel5 = jLabel5;
+        this.jLabel6 = jLabel6;
+        this.jLabel7 = jLabel7;
+        this.jLabel8 = jLabel8;
+        this.jLabel9 = jLabel9;
+        this.jScrollPane1 = jScrollPane1;
+        this.lambdaLlegadas = lambdaLlegadas;
+        this.lblIntegrantes = lblIntegrantes;
+        this.radioButtonExpA1 = radioButtonExpA1;
+        this.radioButtonExpA2 = radioButtonExpA2;
+        this.radioButtonExpA3 = radioButtonExpA3;
+        this.radioButtonExpA4 = radioButtonExpA4;
+        this.radioButtonExpA5 = radioButtonExpA5;
+        this.radioButtonNormalA1 = radioButtonNormalA1;
+        this.radioButtonNormalA2 = radioButtonNormalA2;
+        this.radioButtonNormalA3 = radioButtonNormalA3;
+        this.radioButtonNormalA4 = radioButtonNormalA4;
+        this.radioButtonNormalA5 = radioButtonNormalA5;
+        this.radioButtonUniformeA1 = radioButtonUniformeA1;
+        this.radioButtonUniformeA2 = radioButtonUniformeA2;
+        this.radioButtonUniformeA3 = radioButtonUniformeA3;
+        this.radioButtonUniformeA4 = radioButtonUniformeA4;
+        this.radioButtonUniformeA5 = radioButtonUniformeA5;
+        this.textLambdaA1 = textLambdaA1;
+        this.textLambdaA2 = textLambdaA2;
+        this.textLambdaA3 = textLambdaA3;
+        this.textLambdaA4 = textLambdaA4;
+        this.textLambdaA5 = textLambdaA5;
+        this.textMuA1 = textMuA1;
+        this.textMuA2 = textMuA2;
+        this.textMuA3 = textMuA3;
+        this.textMuA4 = textMuA4;
+        this.textMuA5 = textMuA5;
+        this.textSigmaA1 = textSigmaA1;
+        this.textSigmaA2 = textSigmaA2;
+        this.textSigmaA3 = textSigmaA3;
+        this.textSigmaA4 = textSigmaA4;
+        this.textSigmaA5 = textSigmaA5;
+        this.textaA1 = textaA1;
+        this.textaA2 = textaA2;
+        this.textaA3 = textaA3;
+        this.textaA4 = textaA4;
+        this.textaA5 = textaA5;
+        this.textbA1 = textbA1;
+        this.textbA2 = textbA2;
+        this.textbA3 = textbA3;
+        this.textbA4 = textbA4;
+        this.textbA5 = textbA5;
+        this.txtCantidadFilas = txtCantidadFilas;
+        this.txtDesde = txtDesde;
+        this.txtHasta = txtHasta;
+    }
+    private void llenarFila(Fila aux) {
         filaAImprimir[0] = (int) aux.getContadorN();
-        filaAImprimir[1] = df.format(aux.getRandomA1());
-        filaAImprimir[2] = df.format(aux.getTiempoA1());
-        filaAImprimir[3] = df.format(aux.getRandomA2());
-        filaAImprimir[4] = df.format(aux.getTiempoA2());
-        filaAImprimir[5] = df.format(aux.getRandomA3());
-        filaAImprimir[6] = df.format(aux.getTiempoA3());
-        filaAImprimir[7] = df.format(aux.getRandomA4());
-        filaAImprimir[8] = df.format(aux.getTiempoA4());
-        filaAImprimir[9] = df.format(aux.getFinA4());
-        filaAImprimir[10] = df.format(aux.getRandomA5());
-        filaAImprimir[11] = df.format(aux.getTiempoA5());
-        filaAImprimir[12] = df.format(aux.getFin());
-        filaAImprimir[13] = df.format(aux.getAcumulador());
-        filaAImprimir[14] = df.format(aux.getPromedio());
-        filaAImprimir[15] = df.format(minimo);
-        filaAImprimir[16] = df.format(maximo);
-        filaAImprimir[17] = df.format(aux.getProb45());
-        filaAImprimir[18] = df.format(aux.getVarianza());
-        filaAImprimir[19] = df.format(Math.sqrt(aux.getVarianza()));
-        filaAImprimir[20] = df.format(aux.gettStudentFormula());
-        filaAImprimir[21] = df.format(aux.getTiempoMasTardioA1());
-        filaAImprimir[22] = df.format(aux.getTiempoMasTardioA2());
-        filaAImprimir[23] = df.format(aux.getTiempoMasTardioA3());
-        filaAImprimir[24] = df.format(aux.getTiempoMasTardioA4());
-        filaAImprimir[25] = df.format(aux.getTiempoMasTardioA5());
-        filaAImprimir[26] = df.format(aux.getContadorCC()[0] / aux.getContadorN());
-        filaAImprimir[27] = df.format(aux.getContadorCC()[1] / aux.getContadorN());
-        filaAImprimir[28] = df.format(aux.getContadorCC()[2] / aux.getContadorN());
-        filaAImprimir[29] = df.format(aux.getContadorCC()[3] / aux.getContadorN());
-        filaAImprimir[30] = df.format(aux.getContadorCC()[4] / aux.getContadorN());
+        filaAImprimir[1] = df.format(aux.getReloj());
+        filaAImprimir[2] = aux.getMaterial();
+        filaAImprimir[3] = aux.getProximoMaterial();
+        filaAImprimir[4] = df.format(aux.getRndPedido());
+        filaAImprimir[5] = df.format(aux.getTiempoEntreLlegadas());
+        filaAImprimir[6] = df.format(aux.getProxLlegada());
+        filaAImprimir[7] = aux.getA1().getE().toString();
+        filaAImprimir[8] = aux.getA1().getMaterial();
+        filaAImprimir[9] = df.format(aux.getA1().getRnd());
+        filaAImprimir[10] = aux.getA1().getTiempoAtencion();
+        filaAImprimir[11] = aux.getA1().getProxFin();
+        filaAImprimir[12] = aux.getA1().getColaUno();
+         filaAImprimir[13] = aux.getA2().getE().toString();
+        filaAImprimir[14] = aux.getA2().getMaterial();
+        filaAImprimir[15] = df.format(aux.getA2().getRnd());
+        filaAImprimir[16] = aux.getA2().getTiempoAtencion();
+        filaAImprimir[17] = aux.getA2().getProxFin();
+        filaAImprimir[18] = aux.getA2().getColaUno();
+         filaAImprimir[19] = aux.getA1().getE().toString();
+        filaAImprimir[20] = aux.getA3().getMaterial();
+        filaAImprimir[21] = df.format(aux.getA3().getRnd());
+        filaAImprimir[22] = aux.getA3().getTiempoAtencion();
+        filaAImprimir[23] = aux.getA3().getProxFin();
+        filaAImprimir[24] = aux.getA3().getColaUno();
+         filaAImprimir[25] = aux.getA4().getE().toString();
+        filaAImprimir[26] = aux.getA4().getMaterial();
+        filaAImprimir[27] = df.format(aux.getA4().getRnd());
+        filaAImprimir[28] = aux.getA4().getTiempoAtencion();
+        filaAImprimir[29] = aux.getA4().getProxFin();
+        filaAImprimir[30] = aux.getA4().getColaUno();
+         filaAImprimir[31] = aux.getA5().getE().toString();
+        filaAImprimir[32] = aux.getA5().getMaterial();
+        filaAImprimir[33] = df.format(aux.getA5().getRnd());
+        filaAImprimir[34] = aux.getA5().getTiempoAtencion();
+        filaAImprimir[35] = aux.getA5().getProxFin();
+        filaAImprimir[36] = aux.getA5().getColaUno();
+        filaAImprimir[37] = aux.getA5().getColaDos();
+        filaAImprimir[38] = aux.getColaA3();
+        filaAImprimir[39] = aux.getColaA5();
+        filaAImprimir[40] = aux.getTareasTerminadas();
+        
     }
 
     private boolean validarNumerosNulos(String a, String b) {
@@ -274,17 +396,6 @@ public class Principal extends javax.swing.JFrame {
 
     }
 
-    private boolean VerificarSeleccionCongruencial() {
-        if (radioButtonCongurencial.isSelected() == true) {
-            a = Long.parseLong(textACong.getText());
-            c = Long.parseLong(textCCong.getText());
-            m = Long.parseLong(textMCong.getText());
-            semilla = Long.parseLong(textSemillaCong.getText());
-            return true;
-        }
-        return false;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -310,7 +421,6 @@ public class Principal extends javax.swing.JFrame {
         txtDesde = new javax.swing.JTextField();
         txtHasta = new javax.swing.JTextField();
         btnEvaluar = new javax.swing.JButton();
-        lblMax = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -381,25 +491,16 @@ public class Principal extends javax.swing.JFrame {
         textaA5 = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         textbA5 = new javax.swing.JTextField();
-        lblMin = new javax.swing.JLabel();
-        lblProb45 = new javax.swing.JLabel();
-        lblFechaMasBaja = new javax.swing.JLabel();
         lblIntegrantes = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        radioButtonSistema = new javax.swing.JRadioButton();
-        radioButtonCongurencial = new javax.swing.JRadioButton();
         jLabel35 = new javax.swing.JLabel();
-        textACong = new javax.swing.JTextField();
-        jLabel36 = new javax.swing.JLabel();
-        textCCong = new javax.swing.JTextField();
-        jLabel37 = new javax.swing.JLabel();
-        textMCong = new javax.swing.JTextField();
-        textSemillaCong = new javax.swing.JTextField();
-        jLabel38 = new javax.swing.JLabel();
+        lambdaLlegadas = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
 
+        Tabla.setBackground(new java.awt.Color(204, 204, 255));
+        Tabla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -411,6 +512,9 @@ public class Principal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        Tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        Tabla.setGridColor(new java.awt.Color(0, 0, 0));
+        Tabla.setShowGrid(true);
         jScrollPane1.setViewportView(Tabla);
 
         BtnSimular.setText("Simular");
@@ -422,7 +526,12 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel2.setText("Cantidad de tareas a Simular");
 
-        txtCantidadFilas.setText("100000");
+        txtCantidadFilas.setText("100");
+        txtCantidadFilas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantidadFilasActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Desde");
 
@@ -438,8 +547,6 @@ public class Principal extends javax.swing.JFrame {
                 btnEvaluarActionPerformed(evt);
             }
         });
-
-        lblMax.setText("Max:");
 
         jLabel1.setText("Actividad 1:");
 
@@ -691,69 +798,19 @@ public class Principal extends javax.swing.JFrame {
 
         textbA5.setEnabled(false);
 
-        lblMin.setText("Min:");
-
-        lblProb45.setText("Probabilidad de completar en 45 dias o menos:");
-
-        lblFechaMasBaja.setText("Fecha mas baja posible con 90% de confianza:");
-
         lblIntegrantes.setFont(new java.awt.Font("Cambria Math", 1, 14)); // NOI18N
         lblIntegrantes.setText("Integrantes: Dominguez Ariel, Gudin Andres, Juarez Diego, Paglia Matias, Toia Lucia");
 
         jLabel34.setText("Forma de generacion de aleatorios:");
 
-        buttonGroup6.add(radioButtonSistema);
-        radioButtonSistema.setSelected(true);
-        radioButtonSistema.setText("Sistema");
-        radioButtonSistema.addActionListener(new java.awt.event.ActionListener() {
+        jLabel35.setText("lambda:");
+
+        lambdaLlegadas.setText("3");
+        lambdaLlegadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioButtonSistemaActionPerformed(evt);
+                lambdaLlegadasActionPerformed(evt);
             }
         });
-
-        buttonGroup6.add(radioButtonCongurencial);
-        radioButtonCongurencial.setText("Congruencial");
-        radioButtonCongurencial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioButtonCongurencialActionPerformed(evt);
-            }
-        });
-
-        jLabel35.setText("a:");
-
-        textACong.setEnabled(false);
-        textACong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textACongActionPerformed(evt);
-            }
-        });
-
-        jLabel36.setText("c:");
-
-        textCCong.setEnabled(false);
-        textCCong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textCCongActionPerformed(evt);
-            }
-        });
-
-        jLabel37.setText("m:");
-
-        textMCong.setEnabled(false);
-        textMCong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textMCongActionPerformed(evt);
-            }
-        });
-
-        textSemillaCong.setEnabled(false);
-        textSemillaCong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textSemillaCongActionPerformed(evt);
-            }
-        });
-
-        jLabel38.setText("x:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -761,31 +818,15 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel34)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(radioButtonSistema)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(radioButtonCongurencial)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel35)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textACong, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel36)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textCCong, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel37)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textMCong, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel38)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textSemillaCong, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lambdaLlegadas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4))
                             .addGroup(layout.createSequentialGroup()
@@ -909,7 +950,7 @@ public class Principal extends javax.swing.JFrame {
                                                 .addComponent(jLabel27)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(textbA4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 144, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -920,7 +961,7 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(txtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(BtnSimular, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel28)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radioButtonNormalA5)
@@ -949,19 +990,10 @@ public class Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textbA5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblMax)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblMin))
-                                    .addComponent(lblProb45)
-                                    .addComponent(lblFechaMasBaja))
-                                .addGap(0, 808, Short.MAX_VALUE))
                             .addComponent(lblIntegrantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -984,21 +1016,9 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addComponent(btnEvaluar))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel38)
-                        .addComponent(textSemillaCong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel37)
-                        .addComponent(textMCong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel36)
-                        .addComponent(textCCong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel35)
-                        .addComponent(textACong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(radioButtonSistema)
-                        .addComponent(radioButtonCongurencial)))
+                        .addComponent(jLabel35)
+                        .addComponent(lambdaLlegadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -1080,16 +1100,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(textMuA5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textSigmaA5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMax)
-                    .addComponent(lblMin))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblProb45)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblFechaMasBaja)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(lblIntegrantes, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1098,16 +1110,11 @@ public class Principal extends javax.swing.JFrame {
     double masBajo;
     private void BtnSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimularActionPerformed
         // TODO add your handling code here:
-        TDistribution tdss = new TDistribution(1);
-        System.out.println(tdss.inverseCumulativeProbability(0.975));
 
         N = Integer.parseInt(txtCantidadFilas.getText());
         desde = Integer.parseInt(txtDesde.getText());
         hasta = Integer.parseInt(txtHasta.getText());
-
-        counterProbabilidad45dias = 0;
-
-        boolean esCong = VerificarSeleccionCongruencial();
+        lambdaLl = Double.parseDouble(lambdaLlegadas.getText());
 
         if (obtenerDistribucionA1()) {
             return;
@@ -1127,129 +1134,44 @@ public class Principal extends javax.swing.JFrame {
 
         tabla = new DefaultTableModel();
         tabla.setColumnIdentifiers(columna);
-        if (esCong == true) {
-            aux1 = new FilaCongruencial(auxA1, auxA2, auxA3, auxA4, auxA5, a, c, m, semilla);
-            aux2 = new FilaCongruencial(auxA1, auxA2, auxA3, auxA4, auxA5, a, c, m, semilla);
-        } else {
-            aux1 = new Fila(auxA1, auxA2, auxA3, auxA4, auxA5);
-            aux2 = new Fila(auxA1, auxA2, auxA3, auxA4, auxA5);
-        }
-        aux1.CalcularPrimeraFila();
 
-        try {
-            if (aux2.getSemilla() != -1) {
-                aux2.setSemilla(aux1.getSemilla());
-            }
-        } catch (Exception e) {
-        }
-        maximo = aux1.getFin();
-        minimo = aux1.getFin();
-        double A1 = aux1.getContadorCC()[0];
-        double A2 = aux1.getContadorCC()[1];
-        double A3 = aux1.getContadorCC()[2];
-        double A4 = aux1.getContadorCC()[3];
-        double A5 = aux1.getContadorCC()[4];
-        double[] cc = new double[5];
-        cc[0] = A1;
-        cc[1] = A2;
-        cc[2] = A3;
-        cc[3] = A4;
-        cc[4] = A5;
-
+        IActividad paraA1 = new ActividadUniforme(20,30);
+       IActividad paraA2 = new ActividadUniforme(30,50);
+       IActividad paraA3 = new ActividadExponencial(30);
+       IActividad paraA4 = new ActividadUniforme(10,20);
+       IActividad paraA5 = new ActividadExponencial(5);
+       
+      Actividad A1 = new Actividad(Estado.Libre,0,0, paraA1);
+      Actividad A2 = new Actividad(Estado.Libre,0,0, paraA2);
+      Actividad A3 = new Actividad(Estado.Libre,0,0, paraA3);
+      Actividad  A4 = new Actividad(Estado.Libre,0,0, paraA4);
+      Actividad  A5 = new Actividad(Estado.Libre,0,0, paraA5);
+        
+        aux1 = new Fila();
+        aux2 = new Fila();
+        
+        
+        aux1.CalcularPrimeraFila(lambdaLl);
+        aux2 = new Fila(aux1.getE(),aux1.getMaterial(),aux1.getProximoMaterial(),aux1.getRndPedido(),aux1.getTiempoEntreLlegadas(), aux1.getProxLlegada(), A1, A2, A3, A4, A5,aux1.getColaA3(),aux1.getColaA5(), aux1.getTareasTerminadas(),aux1.getContadorN(), aux1.getLlegadaActividadCalc());
         for (int i = 0; i < N; i++) {
-            if (i == 0) {
-                aux2.setContadorCC(cc);
-            }
-            aux2.CalcularNuevaFila(aux1.getContadorN(), aux1.getPromedio(), aux1.getVarianza());
-            if (aux1.getFin() > maximo) {
-                maximo = aux1.getFin();
-            }
-            if (aux1.getFin() < minimo) {
-                minimo = aux1.getFin();
-            }
-            if (aux1.getFin() <= 45) {
-                aux1.setProb45(1);
-                counterProbabilidad45dias++;
-            }
+
+
+
             if (aux1.getContadorN() >= desde && aux1.getContadorN() <= hasta || aux1.getContadorN() == N) {
                 llenarFila(aux1);
                 tabla.addRow(filaAImprimir);
-                if (aux2.getContadorN() == 2) {
-                    aux2.setAcumulador(aux1.getAcumulador() + aux2.getFin());
-                    aux2.setPromedio(aux2.getAcumulador() / 2);
-                    if (aux2.getFin() > maximo) {
-                        maximo = aux2.getFin();
-                    }
-                    if (aux2.getFin() < minimo) {
-                        minimo = aux2.getFin();
-                    }
-                    if (aux2.getFin() <= 45) {
-                        aux2.setProb45(1);
-                        counterProbabilidad45dias++;
-                    }
+                aux1.CalcularNuevaFila();
+              /*  if (aux2.getContadorN() == 2) {
                     llenarFila(aux2);
                     tabla.addRow(filaAImprimir);
 
-                }
-            }
-            if (aux1.getContadorN() == N) {
-                promedio = aux1.getPromedio();
-            }
-            if (i < 500) {
-                dataset.addValue(aux1.getPromedio(), "", String.valueOf(i));
+                }*/
             }
 
-            aux1 = aux2;
-
-            if (i == N - 1) {
-                masBajo = aux1.gettStudentFormula();
-               // masBajo = Math.round(masBajo);
-            }
         }
-        double promedio45 = (double) counterProbabilidad45dias / (double) N;
-        lblMax.setText("Maximo:" + df.format(maximo));
-        lblMin.setText(" Minimo: " + df.format(minimo));
-        lblProb45.setText("Probabilidad de completar en 45 dias o menos: %" + 100 * promedio45);
+
         Tabla.setModel(tabla);
-
-        /* double all[] = new double[hasta];
-        for (int i = 0; i < hasta; i++) {
-            all[i] = Double.parseDouble(Tabla.getModel().getValueAt(i, 12).toString().replace(",", "."));
-        }
-        Arrays.sort(all);
-        double masBajo = 999999;
-        for (int i = 0; i < all.length; i++) {
-            double d = all[i];
-            if ((double) i / all.length > 0.9) {
-                if (d < masBajo) {
-                    masBajo = d;
-                }
-            }
-        }*/
-        lblFechaMasBaja.setText("Fecha mas baja posible con 90% de confianza: " + String.format("%.2f", masBajo));
-
     }//GEN-LAST:event_BtnSimularActionPerformed
-
-    private void btnEvaluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvaluarActionPerformed
-        // TODO add your handling code here:
-
-        pantallaActual.dispose();
-//        pantallaActual = new Resultado(promedio31, promedio32, promedio33, promedio34);
-        pantallaActual.setVisible(true);
-        JFreeChart lineChart = ChartFactory.createLineChart(
-                "Prueba",
-                "Nro Simulacion", "Dias",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true, true, false);
-
-        ChartFrame frame = new ChartFrame("Gráfico de barras", lineChart);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-
-
-    }//GEN-LAST:event_btnEvaluarActionPerformed
 
     private void radioButtonNormalA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonNormalA1ActionPerformed
 
@@ -1391,35 +1313,33 @@ public class Principal extends javax.swing.JFrame {
         textMuA5.setEnabled(false);
     }//GEN-LAST:event_radioButtonUniformeA5ActionPerformed
 
-    private void radioButtonSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonSistemaActionPerformed
-        textACong.setEnabled(false);
-        textCCong.setEnabled(false);
-        textSemillaCong.setEnabled(false);
-        textMCong.setEnabled(false);
-    }//GEN-LAST:event_radioButtonSistemaActionPerformed
-
-    private void radioButtonCongurencialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonCongurencialActionPerformed
-        textACong.setEnabled(true);
-        textCCong.setEnabled(true);
-        textSemillaCong.setEnabled(true);
-        textMCong.setEnabled(true);
-    }//GEN-LAST:event_radioButtonCongurencialActionPerformed
-
-    private void textACongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textACongActionPerformed
+    private void lambdaLlegadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lambdaLlegadasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textACongActionPerformed
+    }//GEN-LAST:event_lambdaLlegadasActionPerformed
 
-    private void textCCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCCongActionPerformed
+    private void btnEvaluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvaluarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textCCongActionPerformed
 
-    private void textMCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textMCongActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textMCongActionPerformed
+        pantallaActual.dispose();
+        //        pantallaActual = new Resultado(promedio31, promedio32, promedio33, promedio34);
+        pantallaActual.setVisible(true);
+        JFreeChart lineChart = ChartFactory.createLineChart(
+            "Prueba",
+            "Nro Simulacion", "Dias",
+            dataset,
+            PlotOrientation.VERTICAL,
+            true, true, false);
 
-    private void textSemillaCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSemillaCongActionPerformed
+        ChartFrame frame = new ChartFrame("Gráfico de barras", lineChart);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+
+    }//GEN-LAST:event_btnEvaluarActionPerformed
+
+    private void txtCantidadFilasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadFilasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textSemillaCongActionPerformed
+    }//GEN-LAST:event_txtCantidadFilasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1498,9 +1418,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1508,12 +1425,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblFechaMasBaja;
+    private javax.swing.JTextField lambdaLlegadas;
     private javax.swing.JLabel lblIntegrantes;
-    private javax.swing.JLabel lblMax;
-    private javax.swing.JLabel lblMin;
-    private javax.swing.JLabel lblProb45;
-    private javax.swing.JRadioButton radioButtonCongurencial;
     private javax.swing.JRadioButton radioButtonExpA1;
     private javax.swing.JRadioButton radioButtonExpA2;
     private javax.swing.JRadioButton radioButtonExpA3;
@@ -1524,26 +1437,21 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioButtonNormalA3;
     private javax.swing.JRadioButton radioButtonNormalA4;
     private javax.swing.JRadioButton radioButtonNormalA5;
-    private javax.swing.JRadioButton radioButtonSistema;
     private javax.swing.JRadioButton radioButtonUniformeA1;
     private javax.swing.JRadioButton radioButtonUniformeA2;
     private javax.swing.JRadioButton radioButtonUniformeA3;
     private javax.swing.JRadioButton radioButtonUniformeA4;
     private javax.swing.JRadioButton radioButtonUniformeA5;
-    private javax.swing.JTextField textACong;
-    private javax.swing.JTextField textCCong;
     private javax.swing.JTextField textLambdaA1;
     private javax.swing.JTextField textLambdaA2;
     private javax.swing.JTextField textLambdaA3;
     private javax.swing.JTextField textLambdaA4;
     private javax.swing.JTextField textLambdaA5;
-    private javax.swing.JTextField textMCong;
     private javax.swing.JTextField textMuA1;
     private javax.swing.JTextField textMuA2;
     private javax.swing.JTextField textMuA3;
     private javax.swing.JTextField textMuA4;
     private javax.swing.JTextField textMuA5;
-    private javax.swing.JTextField textSemillaCong;
     private javax.swing.JTextField textSigmaA1;
     private javax.swing.JTextField textSigmaA2;
     private javax.swing.JTextField textSigmaA3;

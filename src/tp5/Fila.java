@@ -5,6 +5,7 @@
  */
 package tp5;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.commons.math3.distribution.TDistribution;
@@ -31,9 +32,11 @@ public class Fila {
     int colaA5;
     int tareasTerminadas;
     int contadorN;
-
+    ArrayList<Double> tiemposInicio = new ArrayList<Double>();
     double finA4 = 0;
     IActividad llegadaActividadCalc;
+    double acumEnsamble;
+    double promedioEnsamble;
 
     public Fila(Evento e, int material, int proximoMaterial, double rndPedido, double tiempoEntreLlegadas, double proxLlegada, Actividad A1, Actividad A2, Actividad A3, Actividad A4, Actividad A5, int colaA3, int colaA5, int tareasTerminadas, int contadorN, IActividad llegadaActividadCalc) {
         this.e = e;
@@ -147,6 +150,8 @@ public class Fila {
                 A3.setColaUno(A3.getColaUno() + 1);
             }
             A3.setE(Estado.Ocupado);
+            
+            tiemposInicio.add(reloj);
         }
 
         if (e == Evento.FinA1) {
@@ -240,6 +245,9 @@ public class Fila {
             if (this.colaA5 > 0) {
                 this.colaA5--;
                 this.tareasTerminadas++;
+                double duracionEnsamble = reloj - tiemposInicio.get(tareasTerminadas-1) ;
+                acumEnsamble += duracionEnsamble;
+                promedioEnsamble = acumEnsamble/tareasTerminadas;
             } else {
                 this.colaA3++;
             }
@@ -312,6 +320,9 @@ public class Fila {
             if (this.colaA3 > 0) {
                 this.colaA3--;
                 this.tareasTerminadas++;
+                double duracionEnsamble = reloj - tiemposInicio.get(tareasTerminadas-1) ;
+                acumEnsamble += duracionEnsamble;
+                promedioEnsamble = acumEnsamble/tareasTerminadas;
             } else {
                 this.colaA5++;
             }
@@ -474,5 +485,31 @@ public class Fila {
     public void setLlegadaActividadCalc(IActividad llegadaActividadCalc) {
         this.llegadaActividadCalc = llegadaActividadCalc;
     }
+
+    public ArrayList<Double> getTiemposInicio() {
+        return tiemposInicio;
+    }
+
+    public void setTiemposInicio(ArrayList<Double> tiemposInicio) {
+        this.tiemposInicio = tiemposInicio;
+    }
+
+    public double getAcumEnsamble() {
+        return acumEnsamble;
+    }
+
+    public void setAcumEnsamble(double acumEnsamble) {
+        this.acumEnsamble = acumEnsamble;
+    }
+
+    public double getPromedioEnsamble() {
+        return promedioEnsamble;
+    }
+
+    public void setPromedioEnsamble(double promedioEnsamble) {
+        this.promedioEnsamble = promedioEnsamble;
+    }
+    
+    
 
 }

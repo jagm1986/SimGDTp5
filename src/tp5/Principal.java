@@ -7,6 +7,8 @@ package tp5;
 
 //TODO Agregar validaciones para parametros normal y exponencial
 //TODO Ultimo punto con los 15 intervalos
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.HeadlessException;
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -65,9 +67,7 @@ public class Principal extends javax.swing.JFrame {
     private JFrame pantallaActual;
 
     private Object[] filaAImprimir = new Object[42];
-    private Object[] columna = {"Nro Sim","Reloj", "Nro Material", "Proximo Mat", "Rnd Llegada", "T Entre Llegadas", "Prox Llegada", "Estado A1", "Material A1", "rnd A1", "T Atencion A1", "Prox fin A1", "Cola A1", "Estado A2", "Material A2", "rnd A2", "T Atencion A2", "Prox fin A2", "Cola A2", "Estado A3", "Material A3", "rnd A3", "T Atencion A3", "Prox fin A3", "Cola A3" , "Estado A4", "Material A4", "rnd A4", "T Atencion A4", "Prox fin A4", "Cola A4", "Estado A5", "Material A5", "rnd A5", "T Atencion A5", "Prox fin A5", "Cola A2 (5)", "Cola A4 (5)", "Cola Terminados A3", "Cola Terminados A5", "Tareas terminadas"};
-
-    
+    private Object[] columna = {"Nro Sim", "Reloj", "Evento", "Nro Material", "Proximo Mat", "Rnd Llegada", "T Entre Llegadas", "Prox Llegada", "Estado A1", "Material A1", "rnd A1", "T Atencion A1", "Prox fin A1", "Cola A1", "Estado A2", "Material A2", "rnd A2", "T Atencion A2", "Prox fin A2", "Cola A2", "Estado A3", "Material A3", "rnd A3", "T Atencion A3", "Prox fin A3", "Cola A3", "Estado A4", "Material A4", "rnd A4", "T Atencion A4", "Prox fin A4", "Cola A4", "Estado A5", "Material A5", "rnd A5", "T Atencion A5", "Prox fin A5", "Cola A2 (5)", "Cola A4 (5)", "Cola Terminados A3", "Cola Terminados A5", "Tareas terminadas"};
 
     public Principal(IActividad auxA1, IActividad auxA2, IActividad auxA3, IActividad auxA4, IActividad auxA5, Fila aux1, Fila aux2, JFrame pantallaActual, double masBajo, JButton BtnSimular, JTable Tabla, JButton btnEvaluar, ButtonGroup buttonGroup1, ButtonGroup buttonGroup2, ButtonGroup buttonGroup3, ButtonGroup buttonGroup4, ButtonGroup buttonGroup5, ButtonGroup buttonGroup6, JLabel jLabel1, JLabel jLabel10, JLabel jLabel11, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel20, JLabel jLabel21, JLabel jLabel22, JLabel jLabel23, JLabel jLabel24, JLabel jLabel25, JLabel jLabel26, JLabel jLabel27, JLabel jLabel28, JLabel jLabel29, JLabel jLabel3, JLabel jLabel30, JLabel jLabel31, JLabel jLabel32, JLabel jLabel33, JLabel jLabel34, JLabel jLabel35, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JScrollPane jScrollPane1, JTextField lambdaLlegadas, JLabel lblIntegrantes, JRadioButton radioButtonExpA1, JRadioButton radioButtonExpA2, JRadioButton radioButtonExpA3, JRadioButton radioButtonExpA4, JRadioButton radioButtonExpA5, JRadioButton radioButtonNormalA1, JRadioButton radioButtonNormalA2, JRadioButton radioButtonNormalA3, JRadioButton radioButtonNormalA4, JRadioButton radioButtonNormalA5, JRadioButton radioButtonUniformeA1, JRadioButton radioButtonUniformeA2, JRadioButton radioButtonUniformeA3, JRadioButton radioButtonUniformeA4, JRadioButton radioButtonUniformeA5, JTextField textLambdaA1, JTextField textLambdaA2, JTextField textLambdaA3, JTextField textLambdaA4, JTextField textLambdaA5, JTextField textMuA1, JTextField textMuA2, JTextField textMuA3, JTextField textMuA4, JTextField textMuA5, JTextField textSigmaA1, JTextField textSigmaA2, JTextField textSigmaA3, JTextField textSigmaA4, JTextField textSigmaA5, JTextField textaA1, JTextField textaA2, JTextField textaA3, JTextField textaA4, JTextField textaA5, JTextField textbA1, JTextField textbA2, JTextField textbA3, JTextField textbA4, JTextField textbA5, JTextField txtCantidadFilas, JTextField txtDesde, JTextField txtHasta) throws HeadlessException {
         this.auxA1 = auxA1;
@@ -170,51 +170,124 @@ public class Principal extends javax.swing.JFrame {
         this.txtDesde = txtDesde;
         this.txtHasta = txtHasta;
     }
-    private void llenarFila(Fila aux) {
-        filaAImprimir[0] = (int) aux.getContadorN();
-        filaAImprimir[1] = df.format(aux.getReloj());
-        filaAImprimir[2] = aux.getMaterial();
-        filaAImprimir[3] = aux.getProximoMaterial();
-        filaAImprimir[4] = df.format(aux.getRndPedido());
-        filaAImprimir[5] = df.format(aux.getTiempoEntreLlegadas());
-        filaAImprimir[6] = df.format(aux.getProxLlegada());
-        filaAImprimir[7] = aux.getA1().getE().toString();
-        filaAImprimir[8] = aux.getA1().getMaterial();
-        filaAImprimir[9] = df.format(aux.getA1().getRnd());
-        filaAImprimir[10] = aux.getA1().getTiempoAtencion();
-        filaAImprimir[11] = aux.getA1().getProxFin();
-        filaAImprimir[12] = aux.getA1().getColaUno();
-         filaAImprimir[13] = aux.getA2().getE().toString();
-        filaAImprimir[14] = aux.getA2().getMaterial();
-        filaAImprimir[15] = df.format(aux.getA2().getRnd());
-        filaAImprimir[16] = aux.getA2().getTiempoAtencion();
-        filaAImprimir[17] = aux.getA2().getProxFin();
-        filaAImprimir[18] = aux.getA2().getColaUno();
-         filaAImprimir[19] = aux.getA1().getE().toString();
-        filaAImprimir[20] = aux.getA3().getMaterial();
-        filaAImprimir[21] = df.format(aux.getA3().getRnd());
-        filaAImprimir[22] = aux.getA3().getTiempoAtencion();
-        filaAImprimir[23] = aux.getA3().getProxFin();
-        filaAImprimir[24] = aux.getA3().getColaUno();
-         filaAImprimir[25] = aux.getA4().getE().toString();
-        filaAImprimir[26] = aux.getA4().getMaterial();
-        filaAImprimir[27] = df.format(aux.getA4().getRnd());
-        filaAImprimir[28] = aux.getA4().getTiempoAtencion();
-        filaAImprimir[29] = aux.getA4().getProxFin();
-        filaAImprimir[30] = aux.getA4().getColaUno();
-         filaAImprimir[31] = aux.getA5().getE().toString();
-        filaAImprimir[32] = aux.getA5().getMaterial();
-        filaAImprimir[33] = df.format(aux.getA5().getRnd());
-        filaAImprimir[34] = aux.getA5().getTiempoAtencion();
-        filaAImprimir[35] = aux.getA5().getProxFin();
-        filaAImprimir[36] = aux.getA5().getColaUno();
-        filaAImprimir[37] = aux.getA5().getColaDos();
-        filaAImprimir[38] = aux.getColaA3();
-        filaAImprimir[39] = aux.getColaA5();
-        filaAImprimir[40] = aux.getTareasTerminadas();
+    
+    private String llenarTiempo(double a){
+        if (a == 999999.0){
+                return "-";}
+        return convertirAReloj(a);
         
     }
+    
+    private String convertirAReloj(double a){
+        if(a == 0.0){
+            return "-";
+        }
+        System.out.println(a);
+        int parteEntera = (int) a;
+        int horas =(int) a / 60;
+        int min = parteEntera%60;
+        double resto = a-parteEntera;
+        int seg = (int)(resto*60);
+        
+        String horasForm = String.format("%02d", horas);
+        String minForm = String.format("%02d", min);
+        String segForm = String.format("%02d", seg);
+        return horasForm + ":" + minForm + ":" + segForm;
+    }
+    
+    private void llenarFila(Fila aux) {
+        filaAImprimir[0] = (int) aux.getContadorN();
+        filaAImprimir[1] = convertirAReloj(aux.getReloj());
+        filaAImprimir[2] = aux.getE().toString();
+        filaAImprimir[3] = aux.getMaterial();
+        filaAImprimir[4] = aux.getProximoMaterial();
+        filaAImprimir[5] = df.format(aux.getRndPedido());
+        filaAImprimir[6] = convertirAReloj(aux.getTiempoEntreLlegadas());
+        filaAImprimir[7] = llenarTiempo(aux.getProxLlegada());
+        filaAImprimir[8] = aux.getA1().getE().toString();
+        filaAImprimir[9] = aux.getA1().getMaterial();
+        filaAImprimir[10] = df.format(aux.getA1().getRnd());
+        filaAImprimir[11] = convertirAReloj(aux.getA1().getTiempoAtencion());
+        filaAImprimir[12] = llenarTiempo(aux.getA1().getProxFin());
+        filaAImprimir[13] = aux.getA1().getColaUno();
+        filaAImprimir[14] = aux.getA2().getE().toString();
+        filaAImprimir[15] = aux.getA2().getMaterial();
+        filaAImprimir[16] = df.format(aux.getA2().getRnd());
+        filaAImprimir[17] = convertirAReloj(aux.getA2().getTiempoAtencion());
+        filaAImprimir[18] = llenarTiempo(aux.getA2().getProxFin());
+        filaAImprimir[19] = aux.getA2().getColaUno();
+        filaAImprimir[20] = aux.getA1().getE().toString();
+        filaAImprimir[21] = aux.getA3().getMaterial();
+        filaAImprimir[22] = df.format(aux.getA3().getRnd());
+        filaAImprimir[23] = convertirAReloj(aux.getA3().getTiempoAtencion());
+        filaAImprimir[24] = llenarTiempo(aux.getA3().getProxFin());
+        filaAImprimir[25] = aux.getA3().getColaUno();
+        filaAImprimir[26] = aux.getA4().getE().toString();
+        filaAImprimir[27] = aux.getA4().getMaterial();
+        filaAImprimir[28] = df.format(aux.getA4().getRnd());
+        filaAImprimir[29] = convertirAReloj(aux.getA4().getTiempoAtencion());
+        filaAImprimir[30] = llenarTiempo(aux.getA4().getProxFin());
+        filaAImprimir[31] = aux.getA4().getColaUno();
+        filaAImprimir[32] = aux.getA5().getE().toString();
+        filaAImprimir[33] = aux.getA5().getMaterial();
+        filaAImprimir[34] = df.format(aux.getA5().getRnd());
+        filaAImprimir[35] = convertirAReloj(aux.getA5().getTiempoAtencion());
+        filaAImprimir[36] = llenarTiempo(aux.getA5().getProxFin());
+        filaAImprimir[37] = aux.getA5().getColaUno();
+        filaAImprimir[38] = aux.getA5().getColaDos();
+        filaAImprimir[39] = aux.getColaA3();
+        filaAImprimir[40] = aux.getColaA5();
+        filaAImprimir[41] = aux.getTareasTerminadas();
 
+    }
+
+    
+     /*private void llenarFila(Fila aux) {
+        filaAImprimir[0] = (int) aux.getContadorN();
+        filaAImprimir[1] = df.format(aux.getReloj());
+        filaAImprimir[2] = aux.getE().toString();
+        filaAImprimir[3] = aux.getMaterial();
+        filaAImprimir[4] = aux.getProximoMaterial();
+        filaAImprimir[5] = df.format(aux.getRndPedido());
+        filaAImprimir[6] = convertirAReloj(aux.getTiempoEntreLlegadas());
+        filaAImprimir[7] = llenarTiempo(aux.getProxLlegada());
+        filaAImprimir[8] = aux.getA1().getE().toString();
+        filaAImprimir[9] = aux.getA1().getMaterial();
+        filaAImprimir[10] = df.format(aux.getA1().getRnd());
+        filaAImprimir[11] = aux.getA1().getTiempoAtencion();
+        filaAImprimir[12] = llenarTiempo(aux.getA1().getProxFin());
+        filaAImprimir[13] = aux.getA1().getColaUno();
+        filaAImprimir[14] = aux.getA2().getE().toString();
+        filaAImprimir[15] = aux.getA2().getMaterial();
+        filaAImprimir[16] = df.format(aux.getA2().getRnd());
+        filaAImprimir[17] = aux.getA2().getTiempoAtencion();
+        filaAImprimir[18] = llenarTiempo(aux.getA2().getProxFin());
+        filaAImprimir[19] = aux.getA2().getColaUno();
+        filaAImprimir[20] = aux.getA1().getE().toString();
+        filaAImprimir[21] = aux.getA3().getMaterial();
+        filaAImprimir[22] = df.format(aux.getA3().getRnd());
+        filaAImprimir[23] = aux.getA3().getTiempoAtencion();
+        filaAImprimir[24] = llenarTiempo(aux.getA3().getProxFin());
+        filaAImprimir[25] = aux.getA3().getColaUno();
+        filaAImprimir[26] = aux.getA4().getE().toString();
+        filaAImprimir[27] = aux.getA4().getMaterial();
+        filaAImprimir[28] = df.format(aux.getA4().getRnd());
+        filaAImprimir[29] = aux.getA4().getTiempoAtencion();
+        filaAImprimir[30] = llenarTiempo(aux.getA4().getProxFin());
+        filaAImprimir[31] = aux.getA4().getColaUno();
+        filaAImprimir[32] = aux.getA5().getE().toString();
+        filaAImprimir[33] = aux.getA5().getMaterial();
+        filaAImprimir[34] = df.format(aux.getA5().getRnd());
+        filaAImprimir[35] = aux.getA5().getTiempoAtencion();
+        filaAImprimir[36] = llenarTiempo(aux.getA5().getProxFin());
+        filaAImprimir[37] = aux.getA5().getColaUno();
+        filaAImprimir[38] = aux.getA5().getColaDos();
+        filaAImprimir[39] = aux.getColaA3();
+        filaAImprimir[40] = aux.getColaA5();
+        filaAImprimir[41] = aux.getTareasTerminadas();
+
+    }*/
+    
     private boolean validarNumerosNulos(String a, String b) {
 
         if (a.equals("") || b.equals("")) {
@@ -1116,6 +1189,8 @@ public class Principal extends javax.swing.JFrame {
         hasta = Integer.parseInt(txtHasta.getText());
         lambdaLl = Double.parseDouble(lambdaLlegadas.getText());
 
+        lambdaLl = lambdaLl / 60;
+
         if (obtenerDistribucionA1()) {
             return;
         }
@@ -1135,33 +1210,30 @@ public class Principal extends javax.swing.JFrame {
         tabla = new DefaultTableModel();
         tabla.setColumnIdentifiers(columna);
 
-        IActividad paraA1 = new ActividadUniforme(20,30);
-       IActividad paraA2 = new ActividadUniforme(30,50);
-       IActividad paraA3 = new ActividadExponencial(30);
-       IActividad paraA4 = new ActividadUniforme(10,20);
-       IActividad paraA5 = new ActividadExponencial(5);
-       
-      Actividad A1 = new Actividad(Estado.Libre,0,0, paraA1);
-      Actividad A2 = new Actividad(Estado.Libre,0,0, paraA2);
-      Actividad A3 = new Actividad(Estado.Libre,0,0, paraA3);
-      Actividad  A4 = new Actividad(Estado.Libre,0,0, paraA4);
-      Actividad  A5 = new Actividad(Estado.Libre,0,0, paraA5);
-        
+        IActividad paraA1 = new ActividadUniforme(20, 30);
+        IActividad paraA2 = new ActividadUniforme(30, 50);
+        IActividad paraA3 = new ActividadExponencial(30);
+        IActividad paraA4 = new ActividadUniforme(10, 20);
+        IActividad paraA5 = new ActividadExponencial(5);
+
+        Actividad A1 = new Actividad(Estado.Libre, 0, 0, paraA1);
+        Actividad A2 = new Actividad(Estado.Libre, 0, 0, paraA2);
+        Actividad A3 = new Actividad(Estado.Libre, 0, 0, paraA3);
+        Actividad A4 = new Actividad(Estado.Libre, 0, 0, paraA4);
+        Actividad A5 = new Actividad(Estado.Libre, 0, 0, paraA5);
+
         aux1 = new Fila();
         aux2 = new Fila();
-        
-        
+
         aux1.CalcularPrimeraFila(lambdaLl);
-        aux2 = new Fila(aux1.getE(),aux1.getMaterial(),aux1.getProximoMaterial(),aux1.getRndPedido(),aux1.getTiempoEntreLlegadas(), aux1.getProxLlegada(), A1, A2, A3, A4, A5,aux1.getColaA3(),aux1.getColaA5(), aux1.getTareasTerminadas(),aux1.getContadorN(), aux1.getLlegadaActividadCalc());
+        aux2 = new Fila(aux1.getE(), aux1.getMaterial(), aux1.getProximoMaterial(), aux1.getRndPedido(), aux1.getTiempoEntreLlegadas(), aux1.getProxLlegada(), A1, A2, A3, A4, A5, aux1.getColaA3(), aux1.getColaA5(), aux1.getTareasTerminadas(), aux1.getContadorN(), aux1.getLlegadaActividadCalc());
         for (int i = 0; i < N; i++) {
-
-
 
             if (aux1.getContadorN() >= desde && aux1.getContadorN() <= hasta || aux1.getContadorN() == N) {
                 llenarFila(aux1);
                 tabla.addRow(filaAImprimir);
                 aux1.CalcularNuevaFila();
-              /*  if (aux2.getContadorN() == 2) {
+                /*  if (aux2.getContadorN() == 2) {
                     llenarFila(aux2);
                     tabla.addRow(filaAImprimir);
 
@@ -1171,6 +1243,342 @@ public class Principal extends javax.swing.JFrame {
         }
 
         Tabla.setModel(tabla);
+
+        Tabla.getColumn("Rnd Llegada").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.blue : Color.yellow);
+                return this;
+            }
+        });
+
+        Tabla.getColumn("T Entre Llegadas").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.blue : Color.yellow);
+                return this;
+            }
+        });
+
+        Tabla.getColumn("Prox Llegada").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.blue : Color.yellow);
+                return this;
+            }
+        });
+
+        Tabla.getColumn("Estado A1").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Material A1").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("rnd A1").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("T Atencion A1").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Prox fin A1").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Cola A1").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+         Tabla.getColumn("Estado A2").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Material A2").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                  setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("rnd A2").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                   setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("T Atencion A2").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                   setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Prox fin A2").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                   setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Cola A2").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                   setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                return this;
+            }
+        });
+        
+          Tabla.getColumn("Estado A4").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Material A4").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("rnd A4").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("T Atencion A4").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Prox fin A4").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Cola A4").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.red : Color.GREEN);
+                return this;
+            }
+        });
+        
+        Tabla.getColumn("Cola Terminados A5").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.WHITE : Color.LIGHT_GRAY);
+                return this;
+            }
+        });
+        
+         Tabla.getColumn("Cola Terminados A3").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.WHITE : Color.LIGHT_GRAY);
+                return this;
+            }
+        });
+         
+          Tabla.getColumn("Tareas terminadas").setCellRenderer(
+                new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value,
+                    boolean isSelected,
+                    boolean hasFocus,
+                    int row,
+                    int column) {
+                setText(value.toString());
+                setBackground(isSelected ? Color.WHITE : Color.LIGHT_GRAY);
+                return this;
+            }
+        });
     }//GEN-LAST:event_BtnSimularActionPerformed
 
     private void radioButtonNormalA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonNormalA1ActionPerformed
@@ -1324,11 +1732,11 @@ public class Principal extends javax.swing.JFrame {
         //        pantallaActual = new Resultado(promedio31, promedio32, promedio33, promedio34);
         pantallaActual.setVisible(true);
         JFreeChart lineChart = ChartFactory.createLineChart(
-            "Prueba",
-            "Nro Simulacion", "Dias",
-            dataset,
-            PlotOrientation.VERTICAL,
-            true, true, false);
+                "Prueba",
+                "Nro Simulacion", "Dias",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true, true, false);
 
         ChartFrame frame = new ChartFrame("Gráfico de barras", lineChart);
         frame.pack();

@@ -35,7 +35,7 @@ public class Actividad {
         this.colaUno = colaUno;
         this.colaDos = colaDos;
         this.calcActividad = a;
-        proxFin = 99999;
+        proxFin = 999999.0;
     }
 
     

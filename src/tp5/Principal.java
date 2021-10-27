@@ -66,8 +66,18 @@ public class Principal extends javax.swing.JFrame {
 
     private JFrame pantallaActual;
 
-    private Object[] filaAImprimir = new Object[44];
-    private Object[] columna = {"Nro Sim", "Reloj", "Evento", "Nro Material", "Proximo Mat", "Rnd Llegada", "T Entre Llegadas", "Prox Llegada", "Estado A1", "Material A1", "rnd A1", "T Atencion A1", "Prox fin A1", "Cola A1", "Estado A2", "Material A2", "rnd A2", "T Atencion A2", "Prox fin A2", "Cola A2", "Estado A3", "Material A3", "rnd A3", "T Atencion A3", "Prox fin A3", "Cola A3", "Estado A4", "Material A4", "rnd A4", "T Atencion A4", "Prox fin A4", "Cola A4", "Estado A5", "Material A5", "rnd A5", "T Atencion A5", "Prox fin A5", "Cola A2 (5)", "Cola A4 (5)", "Cola Terminados A3", "Cola Terminados A5", "Tareas terminadas", "Acum T Ensambles", "Prom T ensambles"};
+    private Object[] filaAImprimir = new Object[79];
+    private Object[] columna = {"Nro Sim", "Reloj", "Evento", "Nro Material", "Proximo Mat", "Rnd Llegada", "T Entre Llegadas"
+            , "Prox Llegada", "Estado A1", "Material A1", "rnd A1", "T Atencion A1", "Prox fin A1", "Cola A1"
+            , "Estado A2", "Material A2", "rnd A2", "T Atencion A2", "Prox fin A2", "Cola A2", "Estado A3", "Material A3", "rnd A3", "T Atencion A3"
+            , "Prox fin A3", "Cola A3", "Estado A4", "Material A4", "rnd A4", "T Atencion A4", "Prox fin A4", "Cola A4", "Estado A5", "Material A5"
+            , "rnd A5", "T Atencion A5", "Prox fin A5", "Cola A2 (A5)", "Cola A4 (A5)", "Cola Terminados A3", "Cola Terminados A5", "Tareas terminadas"
+            , "Acum T Ensambles", "Prom T ensambles", "Proporcion Ensambles", "Max Cola A1", "Max Cola A2", "Max Cola A3", "Max Cola A4", "Max Cola A5(A2)"
+            , "Max Cola A5(A4)", "Max Cola Ter A3", "Max Cola Ter A5",  "Acum Perm Cola A1", "Prom Perm Cola A1", "Acum Perm Cola A2", "Prom Perm Cola A2",
+            "Acum Perm Cola A3", "Prom Perm Cola A3", "Acum Perm Cola A4", "Prom Perm Cola A4", "Acum Perm Cola A5(A2)", "Prom Perm Cola A5(A2)", "Acum Perm Cola A5(A4)",
+            "Prom Perm Cola A5(A4)", "Acum Perm Cola Term A3", "Prom Perm Cola Term A3", "Acum Perm Cola Term A5", "Prom Perm Cola Term A5", "Cant prom en Cola A1",
+            "Cant prom en Cola A2", "Cant prom en Cola A3", "Cant prom en Cola A4", "Cant prom en Cola A52", "Cant prom en Cola A54",
+            "Cant prom en Cola Ter A3","Cant prom en Cola Ter A5", "Cant Promedio en sistema", "% Ocup A1"};
 
     public Principal(IActividad auxA1, IActividad auxA2, IActividad auxA3, IActividad auxA4, IActividad auxA5, Fila aux1, Fila aux2, JFrame pantallaActual, double masBajo, JButton BtnSimular, JTable Tabla, JButton btnEvaluar, ButtonGroup buttonGroup1, ButtonGroup buttonGroup2, ButtonGroup buttonGroup3, ButtonGroup buttonGroup4, ButtonGroup buttonGroup5, ButtonGroup buttonGroup6, JLabel jLabel1, JLabel jLabel10, JLabel jLabel11, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel20, JLabel jLabel21, JLabel jLabel22, JLabel jLabel23, JLabel jLabel24, JLabel jLabel25, JLabel jLabel26, JLabel jLabel27, JLabel jLabel28, JLabel jLabel29, JLabel jLabel3, JLabel jLabel30, JLabel jLabel31, JLabel jLabel32, JLabel jLabel33, JLabel jLabel34, JLabel jLabel35, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JScrollPane jScrollPane1, JTextField lambdaLlegadas, JLabel lblIntegrantes, JRadioButton radioButtonExpA1, JRadioButton radioButtonExpA2, JRadioButton radioButtonExpA3, JRadioButton radioButtonExpA4, JRadioButton radioButtonExpA5, JRadioButton radioButtonNormalA1, JRadioButton radioButtonNormalA2, JRadioButton radioButtonNormalA3, JRadioButton radioButtonNormalA4, JRadioButton radioButtonNormalA5, JRadioButton radioButtonUniformeA1, JRadioButton radioButtonUniformeA2, JRadioButton radioButtonUniformeA3, JRadioButton radioButtonUniformeA4, JRadioButton radioButtonUniformeA5, JTextField textLambdaA1, JTextField textLambdaA2, JTextField textLambdaA3, JTextField textLambdaA4, JTextField textLambdaA5, JTextField textMuA1, JTextField textMuA2, JTextField textMuA3, JTextField textMuA4, JTextField textMuA5, JTextField textSigmaA1, JTextField textSigmaA2, JTextField textSigmaA3, JTextField textSigmaA4, JTextField textSigmaA5, JTextField textaA1, JTextField textaA2, JTextField textaA3, JTextField textaA4, JTextField textaA5, JTextField textbA1, JTextField textbA2, JTextField textbA3, JTextField textbA4, JTextField textbA5, JTextField txtCantidadFilas, JTextField txtDesde, JTextField txtHasta) throws HeadlessException {
         this.auxA1 = auxA1;
@@ -88,39 +98,40 @@ public class Principal extends javax.swing.JFrame {
         this.buttonGroup4 = buttonGroup4;
         this.buttonGroup5 = buttonGroup5;
         this.buttonGroup6 = buttonGroup6;
- 
+
         this.jScrollPane1 = jScrollPane1;
         this.lambdaLlegadas = lambdaLlegadas;
         this.lblIntegrantes = lblIntegrantes;
-        
+
         this.txtCantidadFilas = txtCantidadFilas;
         this.txtDesde = txtDesde;
         this.txtHasta = txtHasta;
     }
-    
-    private String llenarTiempo(double a){
-        if (a == 999999.0){
-                return "-";}
+
+    private String llenarTiempo(double a) {
+        if (a == 999999.0) {
+            return "-";
+        }
         return convertirAReloj(a);
-        
+
     }
-    
-    private String convertirAReloj(double a){
-        if(a == 0.0){
+
+    private String convertirAReloj(double a) {
+        if (a == 0.0) {
             return "-";
         }
         int parteEntera = (int) a;
-        int horas =(int) a / 60;
-        int min = parteEntera%60;
-        double resto = a-parteEntera;
-        int seg = (int)(resto*60);
-        
+        int horas = (int) a / 60;
+        int min = parteEntera % 60;
+        double resto = a - parteEntera;
+        int seg = (int) (resto * 60);
+
         String horasForm = String.format("%02d", horas);
         String minForm = String.format("%02d", min);
         String segForm = String.format("%02d", seg);
         return horasForm + ":" + minForm + ":" + segForm;
     }
-    
+
     private void llenarFila(Fila aux) {
         filaAImprimir[0] = (int) aux.getContadorN();
         filaAImprimir[1] = convertirAReloj(aux.getReloj());
@@ -166,11 +177,44 @@ public class Principal extends javax.swing.JFrame {
         filaAImprimir[41] = aux.getTareasTerminadas();
         filaAImprimir[42] = convertirAReloj(aux.getAcumEnsamble());
         filaAImprimir[43] = convertirAReloj(aux.getPromedioEnsamble());
-
+        filaAImprimir[44] = df.format(aux.getProporcionEnsamble());
+        filaAImprimir[45] = aux.getMaxColaA1();
+        filaAImprimir[46] = aux.getMaxColaA2();
+        filaAImprimir[47] = aux.getMaxColaA3();
+        filaAImprimir[48] = aux.getMaxColaA4();
+        filaAImprimir[49] = aux.getMaxColaA5A2();
+        filaAImprimir[50] = aux.getMaxColaA5A4();
+        filaAImprimir[51] = aux.getMaxColaTerA3();
+        filaAImprimir[52] = aux.getMaxColaTerA5();
+        filaAImprimir[53] = convertirAReloj(aux.getAcumPermCola1());
+        filaAImprimir[54] = convertirAReloj(aux.getPromPermCola1());
+        filaAImprimir[55] = convertirAReloj(aux.getAcumPermCola2());
+        filaAImprimir[56] = convertirAReloj(aux.getPromPermCola2());
+        filaAImprimir[57] = convertirAReloj(aux.getAcumPermCola3());
+        filaAImprimir[58] = convertirAReloj(aux.getPromPermCola3());
+        filaAImprimir[59] = convertirAReloj(aux.getAcumPermCola4());
+        filaAImprimir[60] = convertirAReloj(aux.getPromPermCola4());
+        filaAImprimir[61] = convertirAReloj(aux.getAcumPermCola52());
+        filaAImprimir[62] = convertirAReloj(aux.getPromPermCola52());
+        filaAImprimir[63] = convertirAReloj(aux.getAcumPermCola54());
+        filaAImprimir[64] = convertirAReloj(aux.getPromPermCola54());
+        filaAImprimir[65] = convertirAReloj(aux.getAcumPermColaTerA3());
+        filaAImprimir[66] = convertirAReloj(aux.getPromPermColaTerA3());
+        filaAImprimir[67] = convertirAReloj(aux.getAcumPermColaTerA5());
+        filaAImprimir[68] = convertirAReloj(aux.getPromPermColaTerA5());
+        filaAImprimir[69] = df.format(aux.getPromedioCantColaA1());
+        filaAImprimir[70] = df.format(aux.getPromedioCantColaA2());
+        filaAImprimir[71] = df.format(aux.getPromedioCantColaA3());
+        filaAImprimir[72] = df.format(aux.getPromedioCantColaA4());
+        filaAImprimir[73] = df.format(aux.getPromedioCantColaA52());
+        filaAImprimir[74] = df.format(aux.getPromedioCantColaA54());
+        filaAImprimir[75] = df.format(aux.getPromedioCantColaTerA3());
+        filaAImprimir[76] = df.format(aux.getPromedioCantColaTerA5());
+        filaAImprimir[77] = df.format(aux.getPromedioCantSistema());
+        filaAImprimir[78] = df.format(aux.getPorcOcupacionA1());
     }
 
-    
-     /*private void llenarFila(Fila aux) {
+    /*private void llenarFila(Fila aux) {
         filaAImprimir[0] = (int) aux.getContadorN();
         filaAImprimir[1] = df.format(aux.getReloj());
         filaAImprimir[2] = aux.getE().toString();
@@ -215,7 +259,6 @@ public class Principal extends javax.swing.JFrame {
         filaAImprimir[41] = aux.getTareasTerminadas();
 
     }*/
-    
     private boolean validarNumerosNulos(String a, String b) {
 
         if (a.equals("") || b.equals("")) {
@@ -398,23 +441,21 @@ public class Principal extends javax.swing.JFrame {
 
         lambdaLl = lambdaLl / 60;
 
-        
-
         tabla = new DefaultTableModel();
         tabla.setColumnIdentifiers(columna);
 
         aux1 = new Fila();
-       // aux2 = new Fila();
+        // aux2 = new Fila();
 
         aux1.CalcularPrimeraFila(lambdaLl);
         //aux2 = new Fila(aux1.getE(), aux1.getMaterial(), aux1.getProximoMaterial(), aux1.getRndPedido(), aux1.getTiempoEntreLlegadas(), aux1.getProxLlegada(), A1, A2, A3, A4, A5, aux1.getColaA3(), aux1.getColaA5(), aux1.getTareasTerminadas(), aux1.getContadorN(), aux1.getLlegadaActividadCalc());
         for (int i = 0; i < N; i++) {
 
             if ((aux1.getContadorN() >= desde && aux1.getContadorN() <= hasta) || aux1.getContadorN() == N) {
-                
+
                 llenarFila(aux1);
                 tabla.addRow(filaAImprimir);
-                
+
             }
             aux1.CalcularNuevaFila();
         }
@@ -476,7 +517,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Material A1").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -490,7 +531,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("rnd A1").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -504,7 +545,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("T Atencion A1").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -518,7 +559,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Prox fin A1").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -532,7 +573,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Cola A1").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -546,8 +587,8 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
-         Tabla.getColumn("Estado A2").setCellRenderer(
+
+        Tabla.getColumn("Estado A2").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
                     Object value,
@@ -560,7 +601,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Material A2").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -570,11 +611,11 @@ public class Principal extends javax.swing.JFrame {
                     int row,
                     int column) {
                 setText(value.toString());
-                  setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                setBackground(isSelected ? Color.BLUE : Color.CYAN);
                 return this;
             }
         });
-        
+
         Tabla.getColumn("rnd A2").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -584,11 +625,11 @@ public class Principal extends javax.swing.JFrame {
                     int row,
                     int column) {
                 setText(value.toString());
-                   setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                setBackground(isSelected ? Color.BLUE : Color.CYAN);
                 return this;
             }
         });
-        
+
         Tabla.getColumn("T Atencion A2").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -598,11 +639,11 @@ public class Principal extends javax.swing.JFrame {
                     int row,
                     int column) {
                 setText(value.toString());
-                   setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                setBackground(isSelected ? Color.BLUE : Color.CYAN);
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Prox fin A2").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -612,11 +653,11 @@ public class Principal extends javax.swing.JFrame {
                     int row,
                     int column) {
                 setText(value.toString());
-                   setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                setBackground(isSelected ? Color.BLUE : Color.CYAN);
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Cola A2").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -626,12 +667,12 @@ public class Principal extends javax.swing.JFrame {
                     int row,
                     int column) {
                 setText(value.toString());
-                   setBackground(isSelected ? Color.BLUE : Color.CYAN);
+                setBackground(isSelected ? Color.BLUE : Color.CYAN);
                 return this;
             }
         });
-        
-          Tabla.getColumn("Estado A4").setCellRenderer(
+
+        Tabla.getColumn("Estado A4").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
                     Object value,
@@ -644,7 +685,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Material A4").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -658,7 +699,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("rnd A4").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -672,7 +713,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("T Atencion A4").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -686,7 +727,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Prox fin A4").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -700,7 +741,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Cola A4").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -714,7 +755,7 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
+
         Tabla.getColumn("Cola Terminados A5").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
@@ -728,8 +769,8 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-        
-         Tabla.getColumn("Cola Terminados A3").setCellRenderer(
+
+        Tabla.getColumn("Cola Terminados A3").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
                     Object value,
@@ -742,8 +783,8 @@ public class Principal extends javax.swing.JFrame {
                 return this;
             }
         });
-         
-          Tabla.getColumn("Tareas terminadas").setCellRenderer(
+
+        Tabla.getColumn("Tareas terminadas").setCellRenderer(
                 new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table,
                     Object value,

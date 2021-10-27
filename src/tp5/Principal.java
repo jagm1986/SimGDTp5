@@ -539,7 +539,7 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         double prob = aux1.getContMasDe3() / aux1.getContHoras();
-        txtProbMas3.setText("Probabilidad de mas de 3 por hora: " + prob);
+        txtProbMas3.setText("Probabilidad de mas de " + cantParaProb + " por hora: " + prob);
 
         Tabla.setModel(tabla);
 

@@ -171,7 +171,7 @@ public class Fila {
             acumEnsamblesxHora = tareasTerminadas;
             acumHoras += 60.0;
             contHoras++;
-            if(cantEnsamblesxHora >= 3){
+            if(cantEnsamblesxHora >= cantXHora){
                 contMasDe3++;
             }
         }

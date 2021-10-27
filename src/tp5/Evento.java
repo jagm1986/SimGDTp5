@@ -16,5 +16,6 @@ public enum Evento {
     FinA2,
     FinA3,
     FinA4,
-    FinA5
+    FinA5,
+    Hora
     }

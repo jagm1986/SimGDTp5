@@ -44,6 +44,7 @@ public class Principal extends javax.swing.JFrame {
     int N = 0;
     int desde = 0;
     int hasta = 0;
+    int cantParaProb;
     double lambdaLl = 0;
     private IActividad auxA1;
     private IActividad auxA2;
@@ -66,7 +67,7 @@ public class Principal extends javax.swing.JFrame {
 
     private JFrame pantallaActual;
 
-    private Object[] filaAImprimir = new Object[79];
+    private Object[] filaAImprimir = new Object[86];
     private Object[] columna = {"Nro Sim", "Reloj", "Evento", "Nro Material", "Proximo Mat", "Rnd Llegada", "T Entre Llegadas"
             , "Prox Llegada", "Estado A1", "Material A1", "rnd A1", "T Atencion A1", "Prox fin A1", "Cola A1"
             , "Estado A2", "Material A2", "rnd A2", "T Atencion A2", "Prox fin A2", "Cola A2", "Estado A3", "Material A3", "rnd A3", "T Atencion A3"
@@ -77,7 +78,8 @@ public class Principal extends javax.swing.JFrame {
             "Acum Perm Cola A3", "Prom Perm Cola A3", "Acum Perm Cola A4", "Prom Perm Cola A4", "Acum Perm Cola A5(A2)", "Prom Perm Cola A5(A2)", "Acum Perm Cola A5(A4)",
             "Prom Perm Cola A5(A4)", "Acum Perm Cola Term A3", "Prom Perm Cola Term A3", "Acum Perm Cola Term A5", "Prom Perm Cola Term A5", "Cant prom en Cola A1",
             "Cant prom en Cola A2", "Cant prom en Cola A3", "Cant prom en Cola A4", "Cant prom en Cola A52", "Cant prom en Cola A54",
-            "Cant prom en Cola Ter A3","Cant prom en Cola Ter A5", "Cant Promedio en sistema", "% Ocup A1"};
+            "Cant prom en Cola Ter A3","Cant prom en Cola Ter A5", "Cant Promedio en sistema", "% Ocup A1", "% Ocup A2", "% Ocup A3", "% Ocup A4", "% Ocup A5", "% Bloq/Ocup"
+            , "Promedio Ter x Hora", "Cant Ter x Hora"};
 
     public Principal(IActividad auxA1, IActividad auxA2, IActividad auxA3, IActividad auxA4, IActividad auxA5, Fila aux1, Fila aux2, JFrame pantallaActual, double masBajo, JButton BtnSimular, JTable Tabla, JButton btnEvaluar, ButtonGroup buttonGroup1, ButtonGroup buttonGroup2, ButtonGroup buttonGroup3, ButtonGroup buttonGroup4, ButtonGroup buttonGroup5, ButtonGroup buttonGroup6, JLabel jLabel1, JLabel jLabel10, JLabel jLabel11, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel20, JLabel jLabel21, JLabel jLabel22, JLabel jLabel23, JLabel jLabel24, JLabel jLabel25, JLabel jLabel26, JLabel jLabel27, JLabel jLabel28, JLabel jLabel29, JLabel jLabel3, JLabel jLabel30, JLabel jLabel31, JLabel jLabel32, JLabel jLabel33, JLabel jLabel34, JLabel jLabel35, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JScrollPane jScrollPane1, JTextField lambdaLlegadas, JLabel lblIntegrantes, JRadioButton radioButtonExpA1, JRadioButton radioButtonExpA2, JRadioButton radioButtonExpA3, JRadioButton radioButtonExpA4, JRadioButton radioButtonExpA5, JRadioButton radioButtonNormalA1, JRadioButton radioButtonNormalA2, JRadioButton radioButtonNormalA3, JRadioButton radioButtonNormalA4, JRadioButton radioButtonNormalA5, JRadioButton radioButtonUniformeA1, JRadioButton radioButtonUniformeA2, JRadioButton radioButtonUniformeA3, JRadioButton radioButtonUniformeA4, JRadioButton radioButtonUniformeA5, JTextField textLambdaA1, JTextField textLambdaA2, JTextField textLambdaA3, JTextField textLambdaA4, JTextField textLambdaA5, JTextField textMuA1, JTextField textMuA2, JTextField textMuA3, JTextField textMuA4, JTextField textMuA5, JTextField textSigmaA1, JTextField textSigmaA2, JTextField textSigmaA3, JTextField textSigmaA4, JTextField textSigmaA5, JTextField textaA1, JTextField textaA2, JTextField textaA3, JTextField textaA4, JTextField textaA5, JTextField textbA1, JTextField textbA2, JTextField textbA3, JTextField textbA4, JTextField textbA5, JTextField txtCantidadFilas, JTextField txtDesde, JTextField txtHasta) throws HeadlessException {
         this.auxA1 = auxA1;
@@ -109,7 +111,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private String llenarTiempo(double a) {
-        if (a == 999999.0) {
+        if (a == 999999.0 ) {
             return "-";
         }
         return convertirAReloj(a);
@@ -212,6 +214,13 @@ public class Principal extends javax.swing.JFrame {
         filaAImprimir[76] = df.format(aux.getPromedioCantColaTerA5());
         filaAImprimir[77] = df.format(aux.getPromedioCantSistema());
         filaAImprimir[78] = df.format(aux.getPorcOcupacionA1());
+        filaAImprimir[79] = df.format(aux.getPorcOcupacionA2());
+        filaAImprimir[80] = df.format(aux.getPorcOcupacionA3());
+        filaAImprimir[81] = df.format(aux.getPorcOcupacionA4());
+        filaAImprimir[82] = df.format(aux.getPorcOcupacionA5());
+        filaAImprimir[83] = df.format(aux.getPorcBloqueoA5());
+        filaAImprimir[84] = df.format(aux.getPromEnsamblesxHora());
+        filaAImprimir[85] = df.format(aux.getCantEnsamblesxHora());
     }
 
     /*private void llenarFila(Fila aux) {
@@ -300,6 +309,7 @@ public class Principal extends javax.swing.JFrame {
         buttonGroup4 = new javax.swing.ButtonGroup();
         buttonGroup5 = new javax.swing.ButtonGroup();
         buttonGroup6 = new javax.swing.ButtonGroup();
+        buttonGroup7 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
         BtnSimular = new javax.swing.JButton();
@@ -312,6 +322,12 @@ public class Principal extends javax.swing.JFrame {
         lblIntegrantes = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         lambdaLlegadas = new javax.swing.JTextField();
+        txtCantXhora = new javax.swing.JTextField();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        rButtonEventos = new javax.swing.JRadioButton();
+        rButtonEnsambles = new javax.swing.JRadioButton();
+        txtProbMas3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 204, 204));
@@ -341,9 +357,9 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Cantidad de tareas a Simular");
+        jLabel2.setText("Cantidad de Simulaciones");
 
-        txtCantidadFilas.setText("100");
+        txtCantidadFilas.setText("1000");
         txtCantidadFilas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCantidadFilasActionPerformed(evt);
@@ -370,6 +386,29 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        txtCantXhora.setText("3");
+        txtCantXhora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantXhoraActionPerformed(evt);
+            }
+        });
+
+        jLabel35.setText("Probabilidad de que sea menos de ");
+
+        jLabel36.setText("por hora");
+
+        buttonGroup1.add(rButtonEventos);
+        rButtonEventos.setSelected(true);
+        rButtonEventos.setText("Eventos");
+
+        buttonGroup1.add(rButtonEnsambles);
+        rButtonEnsambles.setText("Ensambles");
+        rButtonEnsambles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rButtonEnsamblesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -383,11 +422,21 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(jLabel34)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lambdaLlegadas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(23, 23, 23)
+                                .addComponent(jLabel35)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCantXhora, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel36)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(rButtonEventos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rButtonEnsambles)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -401,7 +450,10 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(lblIntegrantes, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtProbMas3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -411,7 +463,9 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCantidadFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(rButtonEventos)
+                        .addComponent(rButtonEnsambles))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(BtnSimular)
                         .addComponent(txtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -421,10 +475,15 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lambdaLlegadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lambdaLlegadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCantXhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtProbMas3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblIntegrantes, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -433,11 +492,16 @@ public class Principal extends javax.swing.JFrame {
     double masBajo;
     private void BtnSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimularActionPerformed
         // TODO add your handling code here:
-
+        cantParaProb = Integer.parseInt(txtCantXhora.getText());
         N = Integer.parseInt(txtCantidadFilas.getText());
         desde = Integer.parseInt(txtDesde.getText());
         hasta = Integer.parseInt(txtHasta.getText());
         lambdaLl = Double.parseDouble(lambdaLlegadas.getText());
+        if(lambdaLl <= 0){
+            lambdaLl = 0.1;
+        }else if (lambdaLl > 30){
+            lambdaLl = 30;
+        }
 
         lambdaLl = lambdaLl / 60;
 
@@ -446,9 +510,10 @@ public class Principal extends javax.swing.JFrame {
 
         aux1 = new Fila();
         // aux2 = new Fila();
-
+        
         aux1.CalcularPrimeraFila(lambdaLl);
         //aux2 = new Fila(aux1.getE(), aux1.getMaterial(), aux1.getProximoMaterial(), aux1.getRndPedido(), aux1.getTiempoEntreLlegadas(), aux1.getProxLlegada(), A1, A2, A3, A4, A5, aux1.getColaA3(), aux1.getColaA5(), aux1.getTareasTerminadas(), aux1.getContadorN(), aux1.getLlegadaActividadCalc());
+        if(rButtonEventos.isSelected()){
         for (int i = 0; i < N; i++) {
 
             if ((aux1.getContadorN() >= desde && aux1.getContadorN() <= hasta) || aux1.getContadorN() == N) {
@@ -457,8 +522,24 @@ public class Principal extends javax.swing.JFrame {
                 tabla.addRow(filaAImprimir);
 
             }
-            aux1.CalcularNuevaFila();
+            aux1.CalcularNuevaFila(cantParaProb);
+        }}
+        else if (rButtonEnsambles.isSelected()){
+            int i = 0;
+            while(i <N){
+                 i = aux1.getTareasTerminadas();
+                  llenarFila(aux1);
+                tabla.addRow(filaAImprimir);
+                
+            
+            aux1.CalcularNuevaFila(cantParaProb);
+            if(aux1.getContadorN() >= N*100){
+                i=N+1;
+            }
+            }
         }
+        double prob = aux1.getContMasDe3() / aux1.getContHoras();
+        txtProbMas3.setText("Probabilidad de mas de " + cantParaProb + " por hora: " + prob);
 
         Tabla.setModel(tabla);
 
@@ -807,6 +888,14 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadFilasActionPerformed
 
+    private void txtCantXhoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantXhoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantXhoraActionPerformed
+
+    private void rButtonEnsamblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rButtonEnsamblesActionPerformed
+// TODO add your handling code here:
+    }//GEN-LAST:event_rButtonEnsamblesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -854,15 +943,22 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.ButtonGroup buttonGroup7;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField lambdaLlegadas;
     private javax.swing.JLabel lblIntegrantes;
+    private javax.swing.JRadioButton rButtonEnsambles;
+    private javax.swing.JRadioButton rButtonEventos;
+    private javax.swing.JTextField txtCantXhora;
     private javax.swing.JTextField txtCantidadFilas;
     private javax.swing.JTextField txtDesde;
     private javax.swing.JTextField txtHasta;
+    private javax.swing.JLabel txtProbMas3;
     // End of variables declaration//GEN-END:variables
 }

@@ -88,7 +88,26 @@ public class Fila {
     double promedioCantColaTerA5 = 0.0;
     double promedioCantSistema = 0.0;
     double acumOcupA1;
+     double acumOcupA2;
+      double acumOcupA3;
+       double acumOcupA4;
+        double acumOcupA5;
     double porcOcupacionA1;
+    double porcOcupacionA2;
+    double porcOcupacionA3;
+    double porcOcupacionA4;
+    double porcOcupacionA5;
+    double acumBloqA5;
+    double porcBloqueoA5;
+    double acumOcupA5paraBloq;
+    double contHoras;
+    double acumHoras = 60;
+    double cantEnsamblesxHora;
+    double promEnsamblesxHora;
+    double acumEnsamblesxHora;
+    double contMasDe3;
+    
+    
     
     
     public Fila(Evento e, int material, int proximoMaterial, double rndPedido, double tiempoEntreLlegadas, double proxLlegada, Actividad A1, Actividad A2, Actividad A3, Actividad A4, Actividad A5, int colaA3, int colaA5, int tareasTerminadas, int contadorN, IActividad llegadaActividadCalc) {
@@ -141,9 +160,21 @@ public class Fila {
         contadorN = 1;
     }
 
-    public void CalcularNuevaFila() {
+    public void CalcularNuevaFila(int cantXHora) {
          double tempreloj = reloj;
         this.reloj = menorTiempo();
+        cantEnsamblesxHora = 0.0;
+        if(reloj >= acumHoras){
+            e = Evento.Hora;
+            reloj = acumHoras;
+            cantEnsamblesxHora = tareasTerminadas- acumEnsamblesxHora;
+            acumEnsamblesxHora = tareasTerminadas;
+            acumHoras += 60.0;
+            contHoras++;
+            if(cantEnsamblesxHora >= 3){
+                contMasDe3++;
+            }
+        }
 
         if (reloj == proxLlegada) {
             e = e.LlegaPedido;
@@ -155,10 +186,11 @@ public class Fila {
             e = e.FinA3;
         } else if (reloj == A4.getProxFin()) {
             e = e.FinA4;
-        } else {
+        } else if (reloj == A5.getProxFin()){
             e = e.FinA5;
         }
        
+        Estado tempA5 = A5.getE();
 
         if (e == Evento.LlegaPedido) {
             material += 1;
@@ -490,6 +522,43 @@ public class Fila {
         }else acumOcupA1 = 0;
         porcOcupacionA1 = 100*(((porcOcupacionA1*tempreloj/100)+acumOcupA1)/reloj);
         
+        if(A2.getE()==Estado.Ocupado){
+            acumOcupA2 = (reloj - tempreloj);
+        }else acumOcupA2 = 0;
+        porcOcupacionA2 = 100*(((porcOcupacionA2*tempreloj/100)+acumOcupA2)/reloj);
+        
+        if(A3.getE()==Estado.Ocupado){
+            acumOcupA3 = (reloj - tempreloj);
+        }else acumOcupA3 = 0;
+        porcOcupacionA3 = 100*(((porcOcupacionA3*tempreloj/100)+acumOcupA3)/reloj);
+        
+        if(A4.getE()==Estado.Ocupado){
+            acumOcupA4 = (reloj - tempreloj);
+        }else acumOcupA4 = 0;
+        porcOcupacionA4 = 100*(((porcOcupacionA4*tempreloj/100)+acumOcupA4)/reloj);
+        
+        if(A5.getE()==Estado.Ocupado){
+            acumOcupA5 = (reloj - tempreloj);
+            //acumOcupA5paraBloq = (reloj - tempreloj);
+        }else acumOcupA5 = 0;
+        porcOcupacionA5 = 100*(((porcOcupacionA5*tempreloj/100)+acumOcupA5)/reloj);
+        
+        if (tempA5 == Estado.Bloqueado){
+            acumBloqA5+= (reloj - tempreloj);
+            acumOcupA5paraBloq+= (reloj - tempreloj);
+        }
+        if (tempA5 == Estado.Ocupado){
+            acumOcupA5paraBloq+= (reloj - tempreloj);
+        }
+        if(acumBloqA5 >0){
+       porcBloqueoA5 = 100*(acumBloqA5/acumOcupA5paraBloq);
+        }
+       if(contHoras>0){
+       promEnsamblesxHora = tareasTerminadas / contHoras;
+       }
+       
+       
+       
         contadorN++;
 
     }
@@ -1086,6 +1155,142 @@ public class Fila {
 
     public void setPorcOcupacionA1(double porcOcupacionA1) {
         this.porcOcupacionA1 = porcOcupacionA1;
+    }
+
+    public double getAcumOcupA2() {
+        return acumOcupA2;
+    }
+
+    public void setAcumOcupA2(double acumOcupA2) {
+        this.acumOcupA2 = acumOcupA2;
+    }
+
+    public double getAcumOcupA3() {
+        return acumOcupA3;
+    }
+
+    public void setAcumOcupA3(double acumOcupA3) {
+        this.acumOcupA3 = acumOcupA3;
+    }
+
+    public double getAcumOcupA4() {
+        return acumOcupA4;
+    }
+
+    public void setAcumOcupA4(double acumOcupA4) {
+        this.acumOcupA4 = acumOcupA4;
+    }
+
+    public double getAcumOcupA5() {
+        return acumOcupA5;
+    }
+
+    public void setAcumOcupA5(double acumOcupA5) {
+        this.acumOcupA5 = acumOcupA5;
+    }
+
+    public double getPorcOcupacionA2() {
+        return porcOcupacionA2;
+    }
+
+    public void setPorcOcupacionA2(double porcOcupacionA2) {
+        this.porcOcupacionA2 = porcOcupacionA2;
+    }
+
+    public double getPorcOcupacionA3() {
+        return porcOcupacionA3;
+    }
+
+    public void setPorcOcupacionA3(double porcOcupacionA3) {
+        this.porcOcupacionA3 = porcOcupacionA3;
+    }
+
+    public double getPorcOcupacionA4() {
+        return porcOcupacionA4;
+    }
+
+    public void setPorcOcupacionA4(double porcOcupacionA4) {
+        this.porcOcupacionA4 = porcOcupacionA4;
+    }
+
+    public double getPorcOcupacionA5() {
+        return porcOcupacionA5;
+    }
+
+    public void setPorcOcupacionA5(double porcOcupacionA5) {
+        this.porcOcupacionA5 = porcOcupacionA5;
+    }
+
+    public double getAcumBloqA5() {
+        return acumBloqA5;
+    }
+
+    public void setAcumBloqA5(double acumBloqA5) {
+        this.acumBloqA5 = acumBloqA5;
+    }
+
+    public double getPorcBloqueoA5() {
+        return porcBloqueoA5;
+    }
+
+    public void setPorcBloqueoA5(double porcBloqueoA5) {
+        this.porcBloqueoA5 = porcBloqueoA5;
+    }
+
+    public double getAcumOcupA5paraBloq() {
+        return acumOcupA5paraBloq;
+    }
+
+    public void setAcumOcupA5paraBloq(double acumOcupA5paraBloq) {
+        this.acumOcupA5paraBloq = acumOcupA5paraBloq;
+    }
+
+    public double getContHoras() {
+        return contHoras;
+    }
+
+    public void setContHoras(double contHoras) {
+        this.contHoras = contHoras;
+    }
+
+    public double getAcumHoras() {
+        return acumHoras;
+    }
+
+    public void setAcumHoras(double acumHoras) {
+        this.acumHoras = acumHoras;
+    }
+
+    public double getCantEnsamblesxHora() {
+        return cantEnsamblesxHora;
+    }
+
+    public void setCantEnsamblesxHora(double cantEnsamblesxHora) {
+        this.cantEnsamblesxHora = cantEnsamblesxHora;
+    }
+
+    public double getPromEnsamblesxHora() {
+        return promEnsamblesxHora;
+    }
+
+    public void setPromEnsamblesxHora(double promEnsamblesxHora) {
+        this.promEnsamblesxHora = promEnsamblesxHora;
+    }
+
+    public double getAcumEnsamblesxHora() {
+        return acumEnsamblesxHora;
+    }
+
+    public void setAcumEnsamblesxHora(double acumEnsamblesxHora) {
+        this.acumEnsamblesxHora = acumEnsamblesxHora;
+    }
+
+    public double getContMasDe3() {
+        return contMasDe3;
+    }
+
+    public void setContMasDe3(double contMasDe3) {
+        this.contMasDe3 = contMasDe3;
     }
     
     

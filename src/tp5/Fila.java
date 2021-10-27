@@ -161,12 +161,12 @@ public class Fila {
     }
 
     public void CalcularNuevaFila(int cantXHora) {
-         double tempreloj = reloj;
+         double tempreloj = this.reloj;
         this.reloj = menorTiempo();
         cantEnsamblesxHora = 0.0;
         if(reloj >= acumHoras){
             e = Evento.Hora;
-            reloj = acumHoras;
+            this.reloj = acumHoras;
             cantEnsamblesxHora = tareasTerminadas- acumEnsamblesxHora;
             acumEnsamblesxHora = tareasTerminadas;
             acumHoras += 60.0;
@@ -177,17 +177,17 @@ public class Fila {
         }
 
         if (reloj == proxLlegada) {
-            e = e.LlegaPedido;
+            e = Evento.LlegaPedido;
         } else if (reloj == A1.getProxFin()) {
-            e = e.FinA1;
+            e = Evento.FinA1;
         } else if (reloj == A2.getProxFin()) {
-            e = e.FinA2;
+            e = Evento.FinA2;
         } else if (reloj == A3.getProxFin()) {
-            e = e.FinA3;
+            e = Evento.FinA3;
         } else if (reloj == A4.getProxFin()) {
-            e = e.FinA4;
+            e = Evento.FinA4;
         } else if (reloj == A5.getProxFin()){
-            e = e.FinA5;
+            e = Evento.FinA5;
         }
        
         Estado tempA5 = A5.getE();
@@ -200,7 +200,7 @@ public class Fila {
             proxLlegada += tiempoEntreLlegadas;
 
             if (A1.getE() == Estado.Libre) {
-                A1.setMaterial(1);
+                A1.setMaterial(A1.getMaterial()+1);
                 double randA1 = Math.random();
                 A1.setRnd(randA1);
                 double tiempoCalculadoA1 = A1.getCalcActividad().calcularTiempo(randA1);
@@ -214,7 +214,7 @@ public class Fila {
             A1.setE(Estado.Ocupado);
 
             if (A2.getE() == Estado.Libre) {
-                A2.setMaterial(1);
+                A2.setMaterial(A2.getMaterial()+1);
                 double randA1 = Math.random();
                 A2.setRnd(randA1);
                 double tiempoCalculadoA1 = A2.getCalcActividad().calcularTiempo(randA1);
@@ -228,7 +228,7 @@ public class Fila {
             A2.setE(Estado.Ocupado);
 
             if (A3.getE() == Estado.Libre) {
-                A3.setMaterial(1);
+                A3.setMaterial(A3.getMaterial()+1);
                 double randA1 = Math.random();
                 A3.setRnd(randA1);
                 double tiempoCalculadoA1 = A3.getCalcActividad().calcularTiempo(randA1);
@@ -266,7 +266,7 @@ public class Fila {
                 histCola1.remove(0);
             }
             if (A4.getE() == Estado.Libre) {
-                A4.setMaterial(1);
+                A4.setMaterial(A4.getMaterial()+1);
                 double randA1 = Math.random();
                 A4.setRnd(randA1);
                 double tiempoCalculadoA1 = A4.getCalcActividad().calcularTiempo(randA1);
@@ -329,7 +329,8 @@ public class Fila {
         if (e == Evento.FinA3) {
             if (A3.getColaUno() == 0) {
                 A3.setE(Estado.Libre);
-                A3.setColaUno(0);
+                A3.setE(Estado.Libre);
+                //A3.setColaUno(0);
                 A3.setProxFin(999999);
                 A3.setRnd(0.0);
                 A3.setTiempoAtencion(0.0);

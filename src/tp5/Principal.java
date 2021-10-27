@@ -155,7 +155,7 @@ public class Principal extends javax.swing.JFrame {
         filaAImprimir[17] = convertirAReloj(aux.getA2().getTiempoAtencion());
         filaAImprimir[18] = llenarTiempo(aux.getA2().getProxFin());
         filaAImprimir[19] = aux.getA2().getColaUno();
-        filaAImprimir[20] = aux.getA1().getE().toString();
+        filaAImprimir[20] = aux.getA3().getE().toString();
         filaAImprimir[21] = aux.getA3().getMaterial();
         filaAImprimir[22] = df.format(aux.getA3().getRnd());
         filaAImprimir[23] = convertirAReloj(aux.getA3().getTiempoAtencion());
